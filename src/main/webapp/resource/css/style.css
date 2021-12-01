@@ -1,0 +1,892 @@
+@charset 'UTF-8';
+
+@font-face{font-family:'FontAwesome';src:url('font/fontawesome-webfont.eot?v=4.0.1');src:url('font/fontawesome-webfont.eot?#iefix&v=4.0.1') format('embedded-opentype'),url('font/fontawesome-webfont.woff?v=4.0.1') format('woff'),url('font/fontawesome-webfont.ttf?v=4.0.1') format('truetype'),url('font/fontawesome-webfont.svg?v=4.0.1#fontawesomeregular') format('svg');font-weight:normal;font-style:normal}
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&family=Noto+Sans+KR&family=Noto+Serif+KR:wght@200;300;400;500&display=swap');
+/* Basic */
+	#header ul{
+		margin: 0px;	
+	}
+	
+	.menu>li{
+		font-size: 17px;
+		height: 100%;
+	}
+	
+	.menu div{
+		background: white;
+	}
+	
+	.menu>li div a{
+		font-size: 15px;
+	}
+	
+	.menu>li, .menu>li ul{
+		width: 150px;
+	}
+	
+	.menu ul{
+		border-left: 1px solid #aaa;
+		border-bottom: 1px solid #aaa;
+		border-right: 1px solid #aaa;
+	}
+	
+	.menu a, .loginmenu a{
+		color: black;
+	}
+	
+	.menu>li>div{
+		display: none;
+		line-height: 35px;
+	}
+	
+	.menu>li:hover>div{
+		display: block;
+		position: absolute;
+		z-index: 1;
+	} 	
+	
+	.menu div li:hover{
+		background: rgba(93, 93, 93, 0.8);
+	}
+	
+	.menu div li:hover a{
+		color: white;
+	}
+	
+	body
+	{
+		background: none;
+		font-family: 'Nanum Brush Script', cursive;
+	}
+
+	body,input,textarea,select
+	{
+		font-family: 'Noto Sans KR', sans-serif;
+		font-weight: 300;
+		font-size: 11pt;
+		line-height: 1.75em;
+	}
+
+	h1,h2,h3,h4,h5,h6
+	{
+		letter-spacing: 1px;
+		text-transform: uppercase;
+		font-weight: 300;
+	}
+	
+		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+		{
+			color: inherit;
+			text-decoration: none;
+		}
+		
+	/* Change this to whatever font weight/color pairing is most suitable */
+	strong, b
+	{
+		font-weight: bold;
+		color: #000000;
+	}
+	
+	em, i
+	{
+		font-style: italic;
+	}
+
+	/* Don't forget to set this to something that matches the design */
+	a
+	{
+		text-decoration: none;
+	}
+
+	sub
+	{
+		position: relative;
+		top: 0.5em;
+		font-size: 0.8em;
+	}
+	
+	sup
+	{
+		position: relative;
+		top: -0.5em;
+		font-size: 0.8em;
+	}
+	
+	hr
+	{
+		border: 0;
+		border-top: solid 1px #ddd;
+	}
+	
+	blockquote
+	{
+		border-left: solid 0.5em #ddd;
+		padding: 1em 0 1em 2em;
+		font-style: italic;
+	}
+	
+
+	p, ul, ol, dl, table
+	{
+		margin-bottom: 1em;
+	}
+
+	.adminloginForm{
+		text-align: center;
+		width:100%;
+		font-weight: bold;
+		color: white;
+		font-size: 13px;
+	}
+	.adminloginForm a{
+		color: white;
+	}
+
+	header
+	{
+		margin-bottom: 2em;
+		line-height: 1.7em;
+	}
+	
+		header h2
+		{
+			font-size: 2.5em;
+		}
+
+		header .byline
+		{
+			display: block;
+			margin: 0.5em 0 0 0;
+			padding: 0 0 0.5em 0;
+			text-transform: uppercase;
+			font-size: 1.4em;
+		}
+		
+	footer
+	{
+		margin-top: 1em;
+		margin-bottom: 0px;
+		
+	}
+
+	br.clear
+	{
+		clear: both;
+	}
+
+	/* Sections/Articles */
+	
+		section,
+		article
+		{
+			margin-bottom: 3em;
+		}
+		
+		section > :last-child,
+		article > :last-child
+		{
+			margin-bottom: 0;
+		}
+
+		section:last-child,
+		article:last-child
+		{
+			margin-bottom: 0;
+		}
+
+		.row > section,
+		.row > article
+		{
+			margin-bottom: 0;
+		}
+
+	/* Images */
+
+		.image
+		{
+			display: inline-block;
+		}
+		
+			.image img
+			{
+				display: block;
+				width: 100%;
+			}
+
+			.image.featured
+			{
+				display: block;
+				width: 100%;
+				margin: 0 0 2em 0;
+			}
+			
+			.image.full
+			{
+				display: block;
+				width: 100%;
+				margin-bottom: 2em;
+			}
+			
+			.image.left
+			{
+				float: left;
+				margin: 0 2em 2em 0;
+			}
+			
+			.image.centered
+			{
+				display: block;
+				margin: 0 0 2em 0;
+			}
+
+				.image.centered img
+				{
+					margin: 0 auto;
+					width: auto;
+				}
+
+	/* Lists */
+
+		ul.default
+		{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+			ul.default li
+			{
+				display: block;
+				padding: 2em 0em 1.25em 0em;
+				border-top: 1px solid #303030;
+			}
+			
+			ul.default li:first-child
+			{
+				padding-top: 0em;
+				border-top: none;
+			}
+			
+			ul.default a
+			{
+				text-decoration: none;
+				color: rgba(255,255,255,.5);
+			}
+			
+			ul.default a:hover
+			{
+				text-decoration: underline;
+			}
+
+		ul.style1
+		{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		
+			ul.style1 li
+			{
+				padding: 0.60em 0em;
+				border-top: 1px solid;
+				border-color: rgba(0,0,0,.1);
+			}
+			
+			ul.style1 li:first-child
+			{
+				padding-top: 0;
+				border-top: 0;
+			}
+
+
+.style1 >li>a{
+	display: inline-block;
+	position: relative;
+	width: auto;
+	height: 35px;
+	padding: 11px 0 0 18px;
+	color: #5a5a5a;
+	letter-spacing: -1px;
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #fff;
+}
+
+
+
+.style1 >li :hover {
+	color: black;
+	border-style: outset;
+	border-bottom: 2px solid #048249;
+	font-size: 14px;
+}
+
+.style1 >li :active {
+	color: black;
+	border-style: outset;
+	border-bottom: 2px solid #048249;
+	font-size: 14px;
+}
+
+.style1 :after {
+	content: '';
+	position: absolute;
+	
+}
+
+
+		ul.style2
+		{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+			ul.style2 li
+			{
+				padding: 1.90em 0em 1.60em 0em;
+				border-top: 1px solid;
+				border-color: rgba(0,0,0,.1);
+			}
+			
+			ul.style2 li:first-child
+			{
+				padding-top: 0;
+				border-top: 0;
+			}
+
+			ul.style2 img
+			{
+				float: left;
+				padding-right: 1em;
+			}
+			
+		ul.style5
+		{
+			overflow: hidden;
+			margin: 0em 0em 1em 0em;
+			padding: 0em;
+			list-style: none;
+		}
+		
+			ul.style5 li
+			{
+				float: left;
+				padding: 0.25em 0.25em;
+				line-height: 0;
+			}
+			
+			ul.style5 a
+			{
+			}
+
+			
+
+	/* Buttons */
+		
+		.button
+		{
+			position: relative;
+			display: inline-block;
+			margin-top: 0.5em;
+			padding: 0.50em 1.5em;
+			text-decoration: none;
+			text-transform: uppercase;
+			font-size: 1.1em;
+			color: #0A9696;
+			-moz-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+			-webkit-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+			-o-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+			-ms-transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+			transition: color 0.35s ease-in-out, background-color 0.35s ease-in-out;
+			cursor: pointer;
+			font-weight: 550;
+		}
+
+
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+	#header
+	{
+		position: relative;
+		background: #FFF;
+	}
+
+		#header .container
+		{
+			position: relative;
+			
+		}
+	#adminheader{
+		position: relative;
+		background: black;
+		width: 15%;
+		float: left;
+		height: 2020px;
+	}
+
+/*********************************************************************************/
+/* Logo             
+#logo a
+		{
+			display: block;
+			text-decoration: none;
+			font-size: 2.8em;
+			font-weight: 600;
+		}                                                             */
+/*********************************************************************************/
+
+	#logo
+	{
+		position: absolute;
+		left: 0em;
+		top: 3em;
+	}
+	
+		#logo a
+		{
+			
+		}
+		
+
+
+/*********************************************************************************/
+/* 관리자메뉴 adminmenu header                                                                           */
+/*********************************************************************************/
+.adminmenulogo{
+	width: 100%;
+	text-align: center;
+}
+.adminmenu {
+    margin:0px auto;
+    width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	height: 120px;
+	margin-top: 30px;
+}
+
+ul.adminnav {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: inline-block;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  width: 100%;
+}
+
+
+
+ul.adminnav li { 
+  display: inline;
+}
+
+ul.adminnav li a {
+  float: left;
+  line-height: 40px;
+  text-decoration: none;
+  margin: 1px 20px 1px 20px;
+  color: white;
+  
+  
+}
+
+ul.adminnav .current a, ul.adminnav .adminnavbar:hover > a {
+  text-decoration: none;
+  border: none;
+  border-bottom: 2px solid #006e9e;  
+  position: relative; 
+  font-size: 21px;
+}
+
+ul.adminnav ul {
+  display: none;
+}
+
+ul.adminnav .adminnavbar{
+	text-align: center;
+	font-family: sans-serif;
+	font-weight: 900;
+	font-size: 20px;
+}
+
+ul.adminnav .adminnavbar a{
+	padding-top: 20px;
+}
+
+ul.adminnav .adminnavbar:hover > ul {
+  position: absolute;
+  display: block;
+  margin: 40px 0 0 -1px;
+  box-sizing: border-box;
+  padding-top: 50px;
+  text-align: center;
+  font-size: 15px;
+  
+}
+.adminnavbar2{left: 33%;}
+.adminnavbar3{left: 45%;}
+.adminnavbar4{left: 60%;}
+
+
+ul.adminnav li:hover > ul li a {
+  line-height: 39px;
+  color: #333;
+  text-decoration: none;
+  margin: 0;
+  padding: 0 20px 0 20px;
+  text-align: center;
+  
+}
+
+ul.adminnav li:hover > ul li a:hover {
+  text-decoration: none;
+  border-radius: 5px;
+  border-bottom:1px solid #30A479;
+  color: #30A479;
+}
+
+/*********************************************************************************/
+/* Banner                                                                        */
+/*********************************************************************************/
+
+	#banner
+	{
+		position: relative;
+		padding: 12em 0em;
+		background: url(../images/mainTrain.gif) no-repeat center;
+		background-size: 100% 350px;
+		color: #fff;
+		
+	}
+	
+	#banner2
+	{
+		position: relative;
+		padding: 12em 0em;
+		background: url(../images/forest.gif) no-repeat center;
+		background-size: 100% 350px;
+		color: #fff;
+		
+	}
+
+/*********************************************************************************/
+/* Main                                                                          */
+/*********************************************************************************/
+
+	#page
+	{
+		position: relative;
+	}
+	
+	#page1{
+		position: relative;
+	}
+	
+	#adminpage{
+		position: relative;
+		width: 85%;
+		float: left;
+		padding-left: 25px;
+		padding-right: 30px;
+		height: 1900px;
+		overflow: auto;
+	}
+	
+	#adminpage > #main.container{
+		margin-left: auto;
+    	margin-right: auto;
+    	width: 100%;
+	}
+
+	#main
+	{
+		border-top: 1px solid;
+		border-color: rgba(0,0,0,.2);
+	}
+	
+	.sidebar header h2
+	{
+		font-size: 1.6em;
+	}
+	
+	.sidebar
+	{
+		width: 230px;
+	}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+	
+	#footer
+	{
+		position: relative;
+		color: rgba(255,255,255,.4);
+	}
+	
+	#footer .container
+	{
+	}
+
+	#footer h2
+	{
+		padding-bottom: 1.5em;
+		font-size: 1.6em;
+		color: #FFF;
+	}
+
+	#footer strong
+	{
+		color: rgba(255,255,255,.7);
+	}
+	
+/*********************************************************************************/
+/* Copyright                                                                     */
+/*********************************************************************************/
+	
+	#copyright
+	{
+		position: relative;
+		border-top: 1px solid #303030;
+		letter-spacing: 1px;
+		text-align: center;
+		color: rgba(255,255,255,.4);
+	}
+	
+	#copyright .container
+	{
+	}
+	
+	#copyright a
+	{
+		text-decoration: none;
+		color: rgba(255,255,255,.4) !important;
+	}
+
+/*********************************************************************************/
+/* Marketing                                                                     */
+/*********************************************************************************/
+	
+	#marketing
+	{
+		position: relative;
+		padding-bottom: 50px;
+	}
+	
+	#marketing header h2
+	{
+		font-size: 1.6em;
+	}
+	
+/*********************************************************************************/
+/* Featured                                                                      */
+/*********************************************************************************/
+	
+	#featured
+	{
+		position: relative;
+	}
+	
+	#featured .divider
+	{
+		border-bottom: 1px solid #303030;
+	}
+	
+	#featured .box
+	{
+		background: #FFF;
+		padding: 1.4em;
+		font-size: 0.95em;
+	}
+	
+	blockquote
+	{
+		margin: 0;
+		padding: 0;
+		border: none;
+		font-style: normal;
+	}
+	
+	.balloon {
+		padding: 1.87em;
+		background: url(images/img08.jpg) repeat left top;
+		border-radius: 5px;
+		line-height: 180%;
+		font-size: 1.2em;
+		color: #333;
+	}
+	
+	.ballon-bgbtm {
+		height: 1.87em;
+	}
+	
+	.balloon strong
+	{
+		color: #333 !important;
+	}
+
+
+/*********************************************************************************/
+/* ET main                                                                     */
+/*********************************************************************************/
+.mainreservation{
+	background: black;
+}
+
+.mainreservationbutton{
+	width: 80%;
+	margin-bottom: 20px;
+	height: 30px;
+	margin-top: 20px;
+	border: none;
+	border-radius: 5px;
+	background: white;
+}
+
+.mainreservationbuttontd{
+	text-align: center;
+	width: 440px;
+	height: 40px;
+	margin-left: 20px;
+	margin-bottom: 15px;
+	border: 1px solid #44565B;
+	background: #273267;
+	color: white;
+	font-weight: bold;
+}
+
+.mainreservationicon{
+	font-size: 10px;
+	width: 100%;
+	text-align: center;
+	border-top: none;
+	background: #fff;
+}
+
+.mainreservationicon1{
+	padding-top: 10px;
+}
+
+.mainnoticebutton{
+	float: right;
+	height: 20px;
+	font-size: 14px;
+}
+
+.mainnoticebutton a:hover {
+	color: red;
+}
+
+.mainnotice2{
+	background: #fff;
+}
+.mainnoticeTitle{
+	padding: 10px 25px;
+}
+
+
+.main0000{
+	text-align: center;
+	width: 100%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+
+.mainex0000{
+	border-top: 1px solid #cccccc;
+}
+
+.main0001{
+	text-align: center;
+	width: 100%;
+	margin-bottom: 100px;
+}
+
+.mainhot{
+	padding-top : 50px;
+	height : 150px;
+	font-weight: 600;
+	font-size: 30px;
+	text-align: center;
+}
+
+
+.mainhot a{
+	float: right;
+	font-weight: normal;
+	font-size: 14px;
+}
+
+.mainhot a:hover {
+	color: #eeaa43;
+}
+
+
+
+#footer0000{
+	position: relative;
+	height: 100px;
+	background: #666666;
+	padding-top: 20px;
+	font-style: normal;
+	color: white;
+	padding-bottom: 20px;
+	font-size: 12px;
+	width: 100%;
+	float: left;
+}
+
+#footer0000 a{
+	color: white;
+}
+
+.footer1{
+	width: 20%;
+	float: left;
+	height: 70px;
+	text-align: right;
+	padding-right: 30px;
+}
+.footer2{
+	width: 80%;
+	float: left;
+	height: 70px;
+	
+}
+
+.adminmain{
+	font-size: 23px;
+	font-weight: 700;
+	width: 70%;
+	position: relative;
+	
+}
+.trainandtime{
+	width: 100%;
+	font-size: 25px;
+	padding-bottom: 50px;
+	border:none;
+	border-bottom: 1px solid black;
+	margin-top: 30px;
+}
+
+.trainandtime a{
+	color: black;
+}
+
+.trainandtime a:hover{
+	text-decoration: none;
+	color: orange;
+}
+
+.trainandtime_train{
+	width: 100%;
+	padding-top: 20px;
+}
+

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel">
+
+	<select id="listCategory" resultType="com.et.travel.Category">
+		SELECT categoryNum, category
+		FROM promotionCategory
+		ORDER BY categoryNum
+	</select>
+	
+	<select id="listPartner" resultType="com.et.travel.Partner">
+		SELECT partnerCode, partnerName, partnerTel
+		FROM partner
+		ORDER BY partnerCode
+	</select>
+
+	<select id="listStation" resultType="com.et.travel.Station">
+		SELECT sCode, sName, line, lineOrder, engName
+		FROM station
+		ORDER BY sCode DESC
+	</select>
+	
+	<select id="listStationLine" parameterType="map" resultType="com.et.travel.StationLine">
+		SELECT trainCode, trainName, ${startStation} startTime, ${endStation} endTime 
+		FROM STATIONLINE6
+		WHERE ${startStation} IS NOT NULL AND ${endStation} IS NOT NULL 
+			AND MOD(trainCode,2) = 1
+	</select>
+	
+	<select id="listStationLine2" parameterType="map" resultType="com.et.travel.StationLine">
+		SELECT trainCode, trainName, ${startStation} startTime, ${endStation} endTime 
+		FROM STATIONLINE6
+		WHERE ${startStation} IS NOT NULL AND ${endStation} IS NOT NULL
+			AND MOD(trainCode,2) = 0
+	</select>
+
+	<select id="listTravel" parameterType="map" resultType="com.et.travel.Travel">
+		SELECT pd.pmCode, TO_CHAR(pmStartDate,'YYYY/MM/DD') pmStartDate, 
+			TO_CHAR(pmEndDate,'YYYY/MM/DD') pmEndDate, 
+			pmTitle, pmPrice, pmMaxCount, pmPercent, pd.categoryNum, saveFileName, stock
+		FROM promotiondetail pd
+		JOIN promotionCategory pc ON pd.categoryNum = pc.categoryNum
+		JOIN promotionFile pf ON pd.pmCode = pf.pmCode
+		<if test="group!=0">
+			WHERE pc.categoryNum = #{group}
+		</if>
+		ORDER BY pmCode DESC
+	</select>
+	
+	<select id="readTravel" parameterType="String" resultType="com.et.travel.Travel">
+		SELECT pd.pmCode, TO_CHAR(pmStartDate,'YYYY/MM/DD') pmStartDate, 
+			TO_CHAR(pmEndDate,'YYYY/MM/DD') pmEndDate, pmTitle, pmPrice, pmMaxCount, 
+			pmPercent, categoryNum, pd.partnerCode, partnerName, partnerTel, product, 
+			productContent
+		FROM promotionDetail pd
+		JOIN partner pr ON pd.partnerCode = pr.partnerCode
+		WHERE pd.pmCode = #{pmCode}
+	</select>
+	
+	<select id="readPromotion" parameterType="String" resultType="com.et.travel.Travel">
+		SELECT pmCode, trainCode
+		FROM promotion
+		WHERE pmCode= #{trainCode};
+	</select>
+	
+	<!--  짝수 : 상행선 -->
+	<select id="startlist1" parameterType="map" resultType="com.et.travel.Promotion">
+		SELECT pmCode, startStation, endStation
+		FROM promotion p
+		JOIN STATIONLINE6 t ON p.traincode = t.traincode
+		WHERE pmCode = #{pmCode} AND MOD(p.trainCode,2) = 1
+	</select>
+	
+	<select id="startlist2" parameterType="com.et.travel.Promotion" resultType="com.et.travel.Promotion">
+		SELECT pmCode, p.trainCode, trainName, startStation, endStation, ${startStation} startTime, ${endStation} endTime
+		FROM promotion p
+		JOIN STATIONLINE6 t ON p.traincode = t.traincode
+		WHERE pmCode = #{pmCode} AND MOD(p.trainCode,2) = 1
+	</select>
+	
+	<!-- 홀수 : 하행선 -->
+	<select id="endlist1" parameterType="map" resultType="com.et.travel.Promotion">
+		SELECT pmCode, startStation, endStation
+		FROM promotion p
+		JOIN STATIONLINE6 t ON p.traincode = t.traincode
+		WHERE pmCode = #{pmCode} AND MOD(p.trainCode,2) = 0
+	</select>
+	
+	<select id="endlist2" parameterType="com.et.travel.Promotion" resultType="com.et.travel.Promotion">
+		SELECT pmCode, p.trainCode, trainName, startStation, endStation, ${startStation} startTime, ${endStation} endTime
+		FROM promotion p
+		JOIN STATIONLINE6 t ON p.traincode = t.traincode
+		WHERE pmCode = #{pmCode} AND MOD(p.trainCode,2) = 0
+	</select>
+	
+	<select id="listPhoto" parameterType="String" resultType="com.et.travel.Photo">
+		SELECT fileNum, pmCode, saveFileName, originalFileName, fileSize
+		FROM promotionFile
+		WHERE pmCode = #{pmCode}
+	</select>
+
+	<select id="listPhoto2" parameterType="String" resultType="com.et.travel.Photo">
+		SELECT fileContentNum, pmCode, saveFileName, originalFileName, fileSize
+		FROM promotionContentFile
+		WHERE pmCode = #{pmCode}
+	</select>
+	
+	<select id="travelRank" resultType="com.et.travel.Travel">
+		SELECT pmCode, pmTitle, saveFileName, pmPrice, stock FROM (
+		    SELECT ROWNUM rnum, tb.pmCode pmCode, tb.pmTitle pmTitle, tb.saveFileName saveFileName, pmPrice, stock FROM(
+		        SELECT  pd.pmCode, pmTitle , saveFileName, pmPrice, stock
+		        FROM promotionDetail pd
+		        JOIN promotionFile pf ON pd.pmCode = pf.pmCode
+		        ORDER BY stock DESC 
+		    )tb WHERE ROWNUM &lt;= 4
+		)WHERE rnum &gt;= 1 
+	</select>
+	
+	<select id="readFile" parameterType="Integer" resultType="com.et.travel.Photo">
+		SELECT fileNum, pmCode, saveFileName, originalFileName, fileSize
+		FROM promotionfile WHERE fileNum = ${fileNum}
+	</select>
+	
+	<select id="readContentFile" parameterType="Integer" resultType="com.et.travel.Photo">
+		SELECT fileContentNum, pmCode, saveFileName, originalFileName, fileSize
+		FROM readContentFile WHERE fileContentNum = ${fileNum}
+	</select>
+	
+	<select id="randomMain" resultType="com.et.travel.Travel">
+		SELECT pmCode, pmPrice, pmTitle, product, saveFilename, stock FROM(
+		    SELECT pd.pmCode, pmPrice, pmTitle, product, saveFilename , stock
+		    FROM promotionDetail pd
+		    JOIN promotionfile f ON pd.pmCode = f.pmCode
+		   ORDER BY DBMS_RANDOM.RANDOM
+		) WHERE rownum &lt; 5
+	</select>
+	
+	<select id="deadLine" resultType="com.et.travel.Travel">
+		SELECT pd.pmCode, pmPrice, pmTitle, product, saveFilename, TO_CHAR(pmendDate-SYSDATE)*(24*60*60) final, stock
+	    FROM promotionDetail pd
+	    JOIN promotionfile f ON pd.pmCode = f.pmCode
+	    ORDER BY final
+	</select>
+	
+	<!-- 가격 -->
+	<select id="priceGet" parameterType="map" resultType="Integer">
+		SELECT seat1 FROM spay7
+		WHERE startCode=#{s1}
+		AND endCode=#{s2}
+	</select>
+	
+	<select id="TrainGet" parameterType="com.et.travel.Promotion" resultType="String">
+		SELECT sCode FROM STATION6
+		WHERE EngName=#{startStation} OR EngName=#{endStation}
+	</select>
+	
+	<select id="pmCount" parameterType="com.et.travel.Promotion" resultType="INTEGER">
+		SELECT tb2.trinseatCount-tb1.reservationCount count FROM (
+		    SELECT COUNT(*) reservationCount FROM trainReservation tr
+		    JOIN trReservationInfo info ON tr.trCode = info.trCode
+		    JOIN reservedseat rd ON tr.trCode = rd.trCode
+		    WHERE startCode = (SELECT scode FROM station6 WHERE engname=#{startStation})
+		    AND ENDcode= (SELECT scode FROM station6 WHERE engname=#{endStation})
+		    AND info.TrainCode = ${trainCode}
+		    AND NOT REGEXP_LIKE(roomNum, 2||3||4)
+		    AND refund IS NULL
+		)tb1, (
+		    SELECT SUM(seatRow * seatcolumn) trinseatCount 
+		    FROM TRAINSETTING7 
+		    WHERE roomGrade = '일반실' 
+		    AND trainCategory ='KTX'
+		) tb2
+	</select>
+	
+	
+	
+	<insert id="insertPromotionDetail" parameterType="com.et.travel.Travel">
+		INSERT INTO promotionDetail(pmCode, pmStartDate, pmEndDate, pmTitle, pmPrice, pmMaxCount, pmPercent, 
+			categoryNum, partnerCode, product, productContent, stock)
+		VALUES(#{pmCode}, #{pmStartDate}, #{pmEndDate}, #{pmTitle}, #{pmPrice}, #{pmMaxCount}, #{pmPercent}, 
+			#{categoryNum}, #{partnerCode}, #{product}, #{productContent}, 0)
+	</insert>
+	
+	<insert id="insertPhoto" parameterType="com.et.travel.Photo">
+		INSERT INTO promotionFile(fileNum, pmCode, saveFileName, originalFileName, fileSize)
+		VALUES(promotionFile_seq.NEXTVAL, #{pmCode}, #{saveFileName}, #{originalFileName}, #{fileSize})
+	</insert>
+	
+	<insert id="insertPromotionStart" parameterType="com.et.travel.Travel">
+		INSERT INTO promotion(pmSeq, pmCode, trainCode, startStation, endStation) 
+		VALUES(promotion_seq.NEXTVAL, #{pmCode}, #{stCode}, #{startStation}, #{endStation})
+	</insert>
+	
+	<insert id="insertPromotionEnd" parameterType="com.et.travel.Travel">
+		INSERT INTO promotion(pmSeq, pmCode, trainCode, startStation, endStation) 
+		VALUES(promotion_seq.NEXTVAL, #{pmCode}, #{edCode}, #{startStation2}, #{endStation2})
+	</insert>
+	
+	<insert id="insertContentPhoto" parameterType="com.et.travel.Photo">
+		INSERT INTO promotionContentFile(fileContentNum, pmCode, saveFileName, originalFileName, fileSize)
+		VALUES(promotionContentFile_seq.NEXTVAL, #{pmCode}, #{saveFileName}, #{originalFileName}, #{fileSize})
+	</insert>
+	
+	<insert id="insertPromotionAdd" parameterType="com.et.travel.Promotion">
+		INSERT INTO promotion(pmSeq, pmCode, trainCode, startStation, endStation)  
+		VALUES(promotion_seq.NEXTVAL, #{pmCode}, #{trainCode}, #{startStation}, #{endStation})
+	</insert>
+	
+	<update id="updatePromotionDetail" parameterType="com.et.travel.Travel">
+		UPDATE promotionDetail SET 
+			pmStartDate = #{pmStartDate}, pmEndDate = #{pmEndDate}, pmTitle = #{pmTitle},
+			pmPrice = #{pmPrice}, pmMaxCount = #{pmMaxCount}, pmPercent =  #{pmPercent}, categoryNum = #{categoryNum},
+			partnerCode = #{partnerCode}, product = #{product}, productContent=  #{productContent}
+		WHERE pmCode = #{pmCode}
+	</update>
+	
+	
+	
+	<delete id="deleteFile" parameterType="map">
+		DELETE FROM promotionFile WHERE fileNum = #{fileNum}
+	</delete>
+	
+	<delete id="deleteContentFile" parameterType="map">
+		DELETE FROM promotionContentFile WHERE fileContentNum =#{fileNum}
+	</delete>
+	
+	<delete id="deleteTrain" parameterType="Integer">
+		DELETE FROM promotion WHERE trainCode = #{trainCode}
+	</delete>
+	
+	<delete id="deletePromotionDetail" parameterType="String">
+		DELETE FROM promotiondetail WHERE pmCode = #{pmCode}
+	</delete>
+	
+	<delete id="deletePromotion" parameterType="String">
+		DELETE FROM promotion WHERE pmCode= #{pmCode}
+	</delete>
+
+
+<!-- 통계 -->
+	<!-- 지역별 -->
+	<select id="areaChart" resultType="com.et.travel.Chart">
+		SELECT categoryNum, ROUND(RATIO_TO_REPORT(SUM(cnt)) OVER()*100, 1) AS count 
+		FROM(
+			SELECT categoryNum , COUNT(*) cnt
+			FROM pmreservation pm 
+			JOIN promotiondetail pd ON pm.pmCode = pd.pmCode
+			GROUP BY categoryNum
+		)sb
+		GROUP BY categoryNum
+		ORDER BY categoryNum ASC
+	</select>
+	
+	<!-- 프로모션별
+	<select id="promotionChart" resultType="com.et.travel.Chart">
+		SELECT pmCode, product, ROUND(RATIO_TO_REPORT(SUM(cnt)) OVER()*100, 1) AS count
+		FROM(
+			SELECT pm.pmCode pmCode, pm.product, COUNT(*) cnt
+			FROM pmreservation pr
+            JOIN promotiondetail pm ON pr.pmCode = pm.pmCode
+			GROUP BY pm.pmcode, pm.product
+		)sb
+		GROUP BY pmcode, product
+	</select>
+	 -->
+	
+	<select id="promotionChart" resultType="com.et.travel.Chart">
+		SELECT pm.pmCode pmCode, pm.product, COUNT(*) count, pmPrice, pmPercent
+		FROM pmreservation pr
+		JOIN promotiondetail pm ON pr.pmCode = pm.pmCode
+		GROUP BY pm.pmcode, pm.product, pmPrice, pmPercent
+	</select>
+
+</mapper>

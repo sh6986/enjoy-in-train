@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover, a:active{
+}
+
+#train_title{
+	font-weight: bold;
+	font-size: 40px;
+	height: 60px;
+}
+
+
+#train_page{
+	text-align: right;	
+}
+.train_form1{
+	width: 100%;
+}
+.train_form2{
+	width: 100%;
+}
+
+.train_form1 li{
+	float: left;
+	border-top: 2px solid #cccccc;
+	border-bottom: 2px solid #cccccc;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-weight: bold;
+	background: #21373F;
+	color: white;
+}
+
+.train_subwriter{
+	width: 32%;
+	border-right: 1px solid #cccccc;
+}
+
+.train_subcreated{
+	width: 32%;
+	border-right: 1px solid #cccccc;
+}
+
+.train_subcount{
+	width: 32%;
+}
+
+.train_delete{
+	width: 4%;
+}
+
+
+.train_form2 li{
+	height: 40px;
+	line-height: 40px;
+}
+
+.train_subwriter_list{
+	float: left;
+	width: 32%;
+	height: 30px;
+	padding-left: 10px;
+	border-bottom: 1px solid #cccccc;
+	text-align: center;
+}
+
+.train_subcreated_list{
+	float: left;
+	width: 32%;
+	height: 30px;
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+}
+
+.train_subcount_list{
+	float: left;
+	width: 32%;
+	height: 30px;
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+}
+
+.train_delete_list{
+	float: left;
+	width: 4%;
+	height: 30px;
+	text-align: center;
+	border-bottom: 1px solid #cccccc;
+}
+
+.train_button{
+	text-align: right;
+	height: 40px;
+	margin-top: 100px;
+}
+
+.train_button_reset{
+	text-align: right;
+	margin-right: 80px;
+}
+
+.train_button_reset button{
+	height: 40px;
+	border-radius: 5px;
+}
+
+
+.train_button_send{
+	float: right;
+}
+
+.train_button_send button{
+	height: 40px;
+	border-radius: 5px;
+}
+
+.train_sample{
+	text-align: center;
+}
+
+#insertTrain_dialog{
+	display: none;
+	vertical-align:middle;
+}
+
+.train_question{
+	width: 120px;
+}
+
+.train_answer{
+	width: 120px;
+}
+
+.train_answer input{
+	width: 100px;
+}
+
+#roomSetting{
+	display: none;
+}
+
+#roomSetting_grade input{
+	width: 100px;
+}

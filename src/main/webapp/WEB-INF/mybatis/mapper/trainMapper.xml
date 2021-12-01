@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="train">
+
+	<!-- 기차 추가(총 칸, 총 좌석 입력) -->
+	<insert id="insertCategory" parameterType="String">
+		INSERT INTO trainCategory7(trainCategory) VALUES (#{trainCategory})
+	</insert>
+	<insert id="insertRoom" parameterType="com.et.train.Train">
+		INSERT INTO trainSetting7(trainCategory, roomNum, roomGrade, seatRow, seatColumn) VALUES(#{trainCategory}, #{roomNum},
+		#{roomGrade}, #{seatRow}, #{seatColumn})
+	</insert>
+
+	<select id="listTrain" parameterType="map" resultType="com.et.train.Train">
+		SELECT trainCategory, COUNT(roomNum) trainRoomCount, SUM(seatRow*seatColumn) trainSeatCount FROM trainSetting7 group by trainCategory
+	</select>
+	
+	<delete id="deleteTrain" parameterType="String">
+		DELETE FROM trainSetting7 WHERE trainCategory = #{trainCategory}
+	</delete>
+	
+	<delete id="deleteTrainCategory" parameterType="String">
+		DELETE FROM trainCategory7 WHERE trainCategory = #{trainCategory}
+	</delete>
+	
+	
+</mapper>

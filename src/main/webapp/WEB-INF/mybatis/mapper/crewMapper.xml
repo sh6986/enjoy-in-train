@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="crew">
+	<select id="readCrew" parameterType="String" resultType="com.et.crew.Crew">
+		SELECT crewId, crewBirth, crewChatWarning, crewName, crewPwd, crewTel, crewEmail
+		FROM crew
+		WHERE crewId=#{crewId}
+	</select>
+	
+	<insert id="insertCrew" parameterType="com.et.crew.Crew">
+		INSERT INTO crew(crewId, crewName, crewPwd, crewTel, crewEmail, crewBirth, crewChatWarning) 
+		VALUES(#{crewId},#{crewName},#{crewPwd},#{crewTel},#{crewEmail},#{crewBirth},#{crewChatWarning})
+	</insert>
+	 
+	<select id="readCrewName" parameterType="String" resultType="String">
+		SELECT crewName 
+		FROM crew
+		WHERE crewId=#{crewId}
+	</select>
+	
+	<select id="readCrewName2" parameterType="com.et.crew.Crew" resultType="String">
+		SELECT crewId 
+		FROM crew
+		WHERE crewName=#{crewName} and crewTel = #{crewTel}
+	</select>
+	
+	<update id="updateCrew" parameterType="com.et.crew.Crew">
+		UPDATE crew SET crewPwd = #{crewPwd},crewTel = #{crewTel},
+						crewEmail = #{crewEmail} ,crewBirth = #{crewBirth}
+		WHERE crewId = #{crewId}
+	</update>
+
+<!-- 회원관리-->
+	<!-- 검색 -->
+	<sql id="where-list">
+		<choose>
+			<when test="condition=='crewId'">
+				INSTR(crewId,#{keyword}) &gt; =1
+			</when>
+			<otherwise>
+				INSTR(${condition},#{keyword}) &gt; =1
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 데이터갯수 -->
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT COUNT(*)
+		FROM crew c
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+	</select>
+	
+	<!-- 회원리스트 -->
+	<select id="listCrew" parameterType="map" resultType="com.et.crew.Crew">
+		SELECT crewId,crewName,crewTel,crewEmail,crewBirth,crewchatwarning
+		FROM crew
+		<where>
+			<if test="keyword != null and keyword != ''">
+				<include refid="where-list" />
+			</if>
+		</where>
+		ORDER BY crewName ASC
+		OFFSET #{offset} ROWS FETCH FIRST #{rows} ROWS ONLY
+	</select>
+	
+	<select id="listCrewState" parameterType="String" resultType="com.et.crew.Crew">
+		SELECT crewId,crewName,crewTel,crewEmail,crewBirth,crewChatwarning
+		FROM crew
+		ORDER BY crewName ASC
+	</select>
+
+	<select id="readCrewState" parameterType="String" resultType="com.et.crew.Crew">
+		SELECT crewId, crewBirth, crewChatWarning, crewName, crewPwd, crewTel, crewEmail
+		FROM crew
+		WHERE crewId=#{crewId}
+	</select>
+	
+	<update id="updatecrewState" parameterType="com.et.crew.Crew">
+		UPDATE crew SET crewChatWarning=#{crewChatWarning}
+		WHERE crewId = #{crewId}
+	</update>
+</mapper> 
